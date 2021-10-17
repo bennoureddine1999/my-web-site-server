@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "my web site server",
+  "main": "index.js",
+  "scripts": {
+    "test": "consoloe.log(name)",
+    "type": "git",
+    "start": "node index.js",
+    "url": "bennoureddine11@gmail.com ",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "cript": "^1.3.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.9",
+    "mongose": "0.0.2-security",
+    "nodemon": "^2.0.13",
+    "package.json": "^2.0.1"
+  }
+}
