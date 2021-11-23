@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../../models/user");
 const { findOne } = require("../../models/user");
+const fileUpload = require("express-fileupload");
+const utils = require("../../../upload");
+const Path = require("path");
 
 const login = async (req, res) => {
   console.log("DATA reseved");
@@ -56,7 +59,21 @@ const getUserById = async (req, res) => {
     data: user,
   });
 };
-
+const getUserByEmail = async (req, res) => {
+  const email = req.body.email;
+  // console.log(req.body);
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    return res.status(404).send({
+      message: "User not found",
+      data: {},
+    });
+  }
+  res.status(200).send({
+    message: "Fetched successfully",
+    data: user,
+  });
+};
 const createUser = async (req, res) => {
   const email = req.body.email;
   const user = await User.findOne({ email: email });
@@ -79,6 +96,14 @@ const createUser = async (req, res) => {
 };
 
 const updatUser = async (req, res) => {
+  const photo = req.files && req.files.photo;
+  const dateofBirth = req.body.dateofBirth;
+  const gender = req.body.gender;
+  console.log("photo", photo);
+  console.log("dateofBirth", dateofBirth);
+  console.log("gender", gender);
+  // const path = utils.getPath(photo.URL.Ex);
+  // console.log(path);
   const id = req.params.id;
   const user = await User.findOne({ _id: id });
   if (!user) {
@@ -87,7 +112,14 @@ const updatUser = async (req, res) => {
       data: {},
     });
   }
-  const updateuser = await User.updateOne({ _id: id }, { ...req.body });
+  // if (!req.files || Object.keys(req.files).length === 0) {
+  //   return res.status(400).send("No files were uploaded.");
+  // }
+  // photo.mv(path, async function (err) {
+  const updateuser = await User.updateOne(
+    { _id: id },
+    { ...req.body, dateofbirth: dateofBirth, photo: photo, gender: gender }
+  );
   res.status(200).send({
     message: "User updated successfully",
     data: {},
@@ -113,6 +145,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getUser,
   getUserById,
+  getUserByEmail,
   createUser,
   updatUser,
   deleteUser,

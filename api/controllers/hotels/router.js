@@ -6,6 +6,8 @@ const validator = require("../../validator/hotelsvalidator");
 router
   .get("/", controller.getHotel)
   .get("/:id", controller.getHotelById)
+  .post("/findcard", controller.getHotelBYuserId)
+  .post("/search", controller.search)
   .post("/", validator.hotelValidate, controller.creatHotel)
   .put("/:id", validator.hotelValidate, controller.updatHotel)
   .delete("/:id", controller.deletHOtel);

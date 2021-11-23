@@ -12,6 +12,7 @@ router
   .get("/:id", controller.getUserById)
   .post("/", validator.validatePost, controller.createUser)
   .post("/login", validator1.validatelogin, controller.login)
+  .post("/email", controller.getUserByEmail)
   .put("/:id", validator.validatePost, controller.updatUser)
   .delete("/:id", controller.deleteUser);
 

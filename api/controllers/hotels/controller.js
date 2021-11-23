@@ -1,6 +1,9 @@
 const Hotels = require("../../models/hotels");
 const fileUpload = require("express-fileupload");
-const path = require("path");
+const utils = require("../../../upload");
+const Path = require("path");
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
 
 const getHotel = async (req, res) => {
   const hotel = await Hotels.find({});
@@ -24,24 +27,59 @@ const getHotelById = async (req, res) => {
     data: hotel,
   });
 };
+const getHotelBYuserId = async (req, res) => {
+  const userloginID = req.body.userloginID;
+  const hotel = await Hotels.find({ userloginID: userloginID });
+  if (!hotel) {
+    return res.status(404).send({
+      message: "hotel not found",
+      data: {},
+    });
+  }
+  res.status(200).send({
+    message: "Fetched seccessfully",
+    data: hotel,
+  });
+};
 
 const creatHotel = async (req, res) => {
-  const photo = req.files.photo;
-  const uploadPath = __dirname + "C:UsersTRETECDesktopimages" + photo.name;
+  // console.log("files", ...req.body);
+
+  console.log("userID", req.body.userloginID);
+  const photo = req.body.photo;
+  // console.log("photo", photo);
+  const userloginID = req.body.userloginID;
+  // const photo = req.files && req.files.photo;
+  // const path = utils.getPath(photo.name);
+  // console.log(path);
+  // if (!req.files || Object.keys(req.files).length === 0) {
+  //   return res.status(400).send("No files were uploaded.");
+  // }
+  // photo.mv(path, async function (err) {
+  // if (err) return res.status(500).send(err);
   const hotel = new Hotels({
     ...req.body,
-  });
-  if (!req.body.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
-  }
-  photo.mv(uploadPath, function (err) {
-    if (err) return res.status(500).send(err);
-
-    res.send("File uploaded!");
+    // photo: path,
+    photo: photo,
+    userloginID: userloginID,
   });
   await hotel.save();
   res.status(200).send({
     message: "Hotel created seccessfully",
+    data: hotel,
+  });
+};
+const search = async (req, res) => {
+  const province = req.body.Province;
+  const hotel = await Hotels.find({ province: province });
+  if (!hotel) {
+    return res.status(404).send({
+      message: "hotel not found",
+      data: {},
+    });
+  }
+  res.status(200).send({
+    message: "Fetched successfully",
     data: hotel,
   });
 };
@@ -83,4 +121,6 @@ module.exports = {
   creatHotel,
   updatHotel,
   deletHOtel,
+  search,
+  getHotelBYuserId,
 };

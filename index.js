@@ -5,7 +5,14 @@ const fileUpload = require("express-fileupload");
 const app = express();
 require("dotenv").config();
 
-app.use(fileUpload());
+app.use(
+  fileUpload({
+    limits: {
+      fileSize: 1024 * 1024, // 1 MB
+    },
+    abortOnLimit: true,
+  })
+);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
 app.use(express.json());

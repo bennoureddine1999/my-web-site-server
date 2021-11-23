@@ -8,7 +8,10 @@ const A_F_S_schema = new Schema({
   photo: {
     type: String,
   },
-  gps: {
+  city: {
+    type: String,
+  },
+  province: {
     type: String,
   },
   liste: {
@@ -33,6 +36,9 @@ const A_F_S_schema = new Schema({
     type: String,
   },
   email: {
+    type: String,
+  },
+  userloginID: {
     type: String,
   },
 });

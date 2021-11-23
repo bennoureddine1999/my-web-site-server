@@ -9,9 +9,19 @@ const userSchma = new Schema({
   username: {
     type: String,
   },
-  //   dateofbirth: {
-  //     type: String,
-  //   },
+  dateofbirth: {
+    type: String,
+  },
+  photo: {
+    type: String,
+  },
+  age: {
+    type: String,
+  },
+
+  gender: {
+    type: String,
+  },
   email: {
     type: String,
   },
