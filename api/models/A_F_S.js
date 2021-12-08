@@ -5,9 +5,7 @@ const A_F_S_schema = new Schema({
   title: {
     type: String,
   },
-  photo: {
-    type: String,
-  },
+  photo: [],
   city: {
     type: String,
   },

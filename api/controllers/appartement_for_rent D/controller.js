@@ -41,30 +41,46 @@ const get_AFRD_BYuserId = async (req, res) => {
   });
 };
 const creatA_F_R_D = async (req, res) => {
-  console.log("files", req.files);
+  // console.log("files", req.files);
+  const photo = req.body.photo;
 
   const userloginID = req.body.userloginID;
   console.log("userID", req.body.userloginID);
 
-  console.log("files", req.files);
-  const photo = req.files && req.files.photo;
-  const path = utils.getPath(photo.name);
-  console.log(path);
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+  // console.log("files", req.files);
+  // const photo = req.files && req.files.photo;
+  // const path = utils.getPath(photo.name);
+  // console.log(path);
+  // if (!req.files || Object.keys(req.files).length === 0) {
+  //   return res.status(400).send("No files were uploaded.");
+  // }
+  // photo.mv(path, async function (err) {
+  //   if (err) return res.status(500).send(err);
+  const a_f_r_d = new A_F_R_D({
+    ...req.body,
+    photo: photo,
+    userloginID: userloginID,
+  });
+  await a_f_r_d.save();
+  res.status(200).send({
+    message: "a_f_r_d created seccessfully",
+    data: { a_f_r_d },
+  });
+  // });
+};
+
+const search = async (req, res) => {
+  const province = req.body.Province;
+  const a_f_r_d = await A_F_R_D.find({ province: province });
+  if (!a_f_r_d) {
+    return res.status(404).send({
+      message: "A_F_R_D not found",
+      data: {},
+    });
   }
-  photo.mv(path, async function (err) {
-    if (err) return res.status(500).send(err);
-    const a_f_r_d = new A_F_R_D({
-      ...req.body,
-      photo: path,
-      userloginID: userloginID,
-    });
-    await a_f_r_d.save();
-    res.status(200).send({
-      message: "a_f_r_m created seccessfully",
-      data: { a_f_r_d },
-    });
+  res.status(200).send({
+    message: "Fetched successfully",
+    data: a_f_r_d,
   });
 };
 const updatA_F_R_D = async (req, res) => {
@@ -105,4 +121,5 @@ module.exports = {
   updatA_F_R_D,
   deletA_F_R_D,
   get_AFRD_BYuserId,
+  search,
 };

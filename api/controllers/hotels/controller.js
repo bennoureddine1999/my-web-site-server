@@ -44,8 +44,9 @@ const getHotelBYuserId = async (req, res) => {
 
 const creatHotel = async (req, res) => {
   // console.log("files", ...req.body);
-
-  console.log("userID", req.body.userloginID);
+  const province = req.body.province;
+  // console.log("province", province);
+  // console.log("userID", req.body.userloginID);
   const photo = req.body.photo;
   // console.log("photo", photo);
   const userloginID = req.body.userloginID;
@@ -61,6 +62,7 @@ const creatHotel = async (req, res) => {
     ...req.body,
     // photo: path,
     photo: photo,
+    province: province,
     userloginID: userloginID,
   });
   await hotel.save();

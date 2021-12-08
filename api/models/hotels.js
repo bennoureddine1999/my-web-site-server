@@ -8,7 +8,7 @@ const HotelSchema = new Schema({
   liste: {
     type: String,
   },
-  photo: {},
+  photo: [],
   prix: {
     type: Number,
   },

@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 const validatePost = (req, res, next) => {
   const schema = Joi.object({
+    dateofbirth: Joi.required(),
     name: Joi.string().required(),
     username: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -10,7 +11,6 @@ const validatePost = (req, res, next) => {
     photo: Joi.required(),
     gender: Joi.required(),
     age: Joi.required(),
-    dateofbirth: Joi.required(),
   });
   const result = schema.validate(req.body);
   if (result.error) {

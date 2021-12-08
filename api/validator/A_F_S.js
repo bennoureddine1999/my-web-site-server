@@ -3,7 +3,7 @@ const Joi = require("joi");
 const A_F_Svalidator = (req, res, next) => {
   const schema = Joi.object({
     title: Joi.string().required(),
-    // photo: Joi.required(),
+    photo: Joi.required(),
     province: Joi.string().required(),
     city: Joi.string().required(),
     liste: Joi.string().required(),

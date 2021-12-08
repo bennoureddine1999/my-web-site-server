@@ -42,29 +42,46 @@ const get_AFS_BYuserId = async (req, res) => {
 };
 
 const creatA_F_S = async (req, res) => {
-  console.log("files", req.files);
+  // console.log("files", req.files);
+  const province = req.body.Province;
 
-  console.log("userID", req.body.userloginID);
-
+  // console.log("userID", req.body.userloginID);
+  const photo = req.body.photo;
   const userloginID = req.body.userloginID;
-  const photo = req.files && req.files.photo;
-  const path = utils.getPath(photo.name);
-  console.log(path);
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+  // const photo = req.files && req.files.photo;
+  // const path = utils.getPath(photo.name);
+  // console.log(path);
+  // if (!req.files || Object.keys(req.files).length === 0) {
+  //   return res.status(400).send("No files were uploaded.");
+  // }
+  // photo.mv(path, async function (err) {
+  //   if (err) return res.status(500).send(err);
+  const a_f_s = new A_F_S({
+    ...req.body,
+    photo: photo,
+    province: province,
+    userloginID: userloginID,
+  });
+  await a_f_s.save();
+  res.status(200).send({
+    message: "a_f_s created seccessfully",
+    data: a_f_s,
+  });
+  // });
+};
+
+const search = async (req, res) => {
+  const province = req.body.Province;
+  const a_f_s = await A_F_S.find({ province: province });
+  if (!a_f_s) {
+    return res.status(404).send({
+      message: "A_F_R_D not found",
+      data: {},
+    });
   }
-  photo.mv(path, async function (err) {
-    if (err) return res.status(500).send(err);
-    const a_f_s = new A_F_S({
-      ...req.body,
-      photo: path,
-      userloginID: userloginID,
-    });
-    await a_f_s.save();
-    res.status(200).send({
-      message: "a_f_s created seccessfully",
-      data: a_f_s,
-    });
+  res.status(200).send({
+    message: "Fetched successfully",
+    data: a_f_s,
   });
 };
 
@@ -106,4 +123,5 @@ module.exports = {
   updatA_F_S,
   deletA_F_S,
   get_AFS_BYuserId,
+  search,
 };

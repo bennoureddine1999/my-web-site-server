@@ -7,6 +7,8 @@ router
   .get("/", controller.getA_F_S)
   .get("/:id", controller.getgetA_F_SById)
   .post("/findcard", controller.get_AFS_BYuserId)
+  .post("/search", controller.search)
+
   .post("/", validator.A_F_Svalidator, controller.creatA_F_S)
   .put("/:id", validator.A_F_Svalidator, controller.updatA_F_S)
   .delete("/:id", controller.deletA_F_S);

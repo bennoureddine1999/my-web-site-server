@@ -5,9 +5,7 @@ const A_F_R_D_schema = new Schema({
   title: {
     type: String,
   },
-  photo: {
-    type: String,
-  },
+
   province: {
     type: String,
   },
@@ -41,6 +39,7 @@ const A_F_R_D_schema = new Schema({
   userloginID: {
     type: String,
   },
+  photo: [],
 });
 
 const A_F_R_D = mongoose.model("A_F_R_D", A_F_R_D_schema);

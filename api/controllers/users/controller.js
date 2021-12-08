@@ -46,7 +46,7 @@ const getUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.Id;
   const user = await User.findOne({ _id: id });
   if (!user) {
     return res.status(404).send({
@@ -96,12 +96,12 @@ const createUser = async (req, res) => {
 };
 
 const updatUser = async (req, res) => {
-  const photo = req.files && req.files.photo;
-  const dateofBirth = req.body.dateofBirth;
+  const photo = req.body.photo;
+  const dateofbirth = req.body.dateofbirth;
   const gender = req.body.gender;
-  console.log("photo", photo);
-  console.log("dateofBirth", dateofBirth);
-  console.log("gender", gender);
+  // console.log("photo", photo);
+  // console.log("dateofBirth", dateofbirth);
+  // console.log("gender", gender);
   // const path = utils.getPath(photo.URL.Ex);
   // console.log(path);
   const id = req.params.id;
@@ -118,7 +118,7 @@ const updatUser = async (req, res) => {
   // photo.mv(path, async function (err) {
   const updateuser = await User.updateOne(
     { _id: id },
-    { ...req.body, dateofbirth: dateofBirth, photo: photo, gender: gender }
+    { ...req.body, photo: photo, dateofbirth: dateofbirth, gender: gender }
   );
   res.status(200).send({
     message: "User updated successfully",
